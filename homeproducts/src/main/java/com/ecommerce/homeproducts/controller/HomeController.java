@@ -1,9 +1,12 @@
 package com.ecommerce.homeproducts.controller;
 
 import com.ecommerce.homeproducts.jwt.JwtService;
+import com.ecommerce.homeproducts.model.LoginDto;
 import com.ecommerce.homeproducts.model.User;
 import com.ecommerce.homeproducts.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,29 +19,26 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private JwtService jwtService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
     @GetMapping("/greet")
     public String greet(){
         return "Good Morning";
     };
 
     @PostMapping("/register")
-    public String register(@RequestBody User user){
-        return userService.load(user);
+    public ResponseEntity<?> register(@RequestBody User user){
+        try{
+            return userService.load(user);
+        } catch (Exception e) {
+            return new ResponseEntity<>("error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user){
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
-        if (authentication.isAuthenticated()){
-            return jwtService.generateToken(user.getUsername());
-        } else {
-            return "failure";
+    public ResponseEntity<?> login(@RequestBody LoginDto user){
+        try{
+            return userService.login(user);
+        } catch (Exception e) {
+            return new ResponseEntity<>("error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
