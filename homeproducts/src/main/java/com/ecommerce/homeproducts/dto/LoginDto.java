@@ -1,4 +1,4 @@
-package com.ecommerce.homeproducts.model;
+package com.ecommerce.homeproducts.dto;
 
 public class LoginDto {
     private String username;

@@ -1,7 +1,8 @@
 package com.ecommerce.homeproducts.service;
 
+import com.ecommerce.homeproducts.config.UserPrincipal;
 import com.ecommerce.homeproducts.jwt.JwtService;
-import com.ecommerce.homeproducts.model.LoginDto;
+import com.ecommerce.homeproducts.dto.LoginDto;
 import com.ecommerce.homeproducts.model.User;
 import com.ecommerce.homeproducts.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -49,5 +51,10 @@ public class UserService {
             return new ResponseEntity<>(token,HttpStatus.OK);
         }
         return new ResponseEntity<>("error",HttpStatus.UNAUTHORIZED);
+    }
+
+    public User getCurrentUser() {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userPrincipal.getUser();
     }
 }

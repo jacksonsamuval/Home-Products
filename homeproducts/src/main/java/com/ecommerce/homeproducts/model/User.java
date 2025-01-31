@@ -1,9 +1,7 @@
 package com.ecommerce.homeproducts.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.ecommerce.homeproducts.dto.Role;
+import jakarta.persistence.*;
 
 @Entity
 public class User {
@@ -16,6 +14,16 @@ public class User {
     private String mobileNo;
     private String age;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public String getMobileNo() {
         return mobileNo;

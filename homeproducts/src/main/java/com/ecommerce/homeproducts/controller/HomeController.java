@@ -1,6 +1,6 @@
 package com.ecommerce.homeproducts.controller;
 
-import com.ecommerce.homeproducts.model.LoginDto;
+import com.ecommerce.homeproducts.dto.LoginDto;
 import com.ecommerce.homeproducts.model.User;
 import com.ecommerce.homeproducts.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
